@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Максим — портфолио</title>
+  <meta name="description" content="Портфолио Максима. Создаю сайты под ключ, беру проекты, поддержка." />
+  <style>
+    :root{
+      --accent1:#7c5cff;
+      --accent2:#4da6ff;
+      --glass: rgba(255,255,255,0.42);
+      --glass-strong: rgba(255,255,255,0.62);
+      --text:#071022;
+      --muted:#6b7280;
+      --maxw:1100px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      margin:0;min-height:100vh;font-family:Arial, sans-serif;color:var(--text);
+      background: linear-gradient(-45deg, #00ff7f, #ffff00, #1e90ff, #32cd32);
+      background-size: 600% 600%;
+      animation: gradientBG 30s ease infinite;
+      -webkit-font-smoothing:antialiased;
+    }
+    @keyframes gradientBG { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+
+    .container{max-width:var(--maxw);margin:0 auto;padding:0 20px;box-sizing:border-box}
+
+    header{
+      display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:var(--glass);backdrop-filter:blur(6px);
+      position:sticky;top:12px;border-radius:12px;margin:12px auto;max-width:calc(var(--maxw) + 40px);z-index:80;box-shadow: 0 10px 30px rgba(2,6,23,0.08);
+    }
+    .brand{font-weight:800;font-size:18px;letter-spacing:-0.02em}
+    nav{display:flex;gap:8px;align-items:center}
+    nav a{margin:0 6px;padding:8px 12px;border-radius:10px;text-decoration:none;background:transparent;color:var(--text);font-weight:600;transition: all .25s ease}
+    nav a:hover{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#fff;transform:translateY(-3px)}
+    nav a.active{box-shadow: 0 6px 18px rgba(124,92,255,0.08);background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#fff}
+
+    .lang-select{margin-left:12px;padding:6px 8px;border-radius:8px;border:1px solid rgba(0,0,0,0.06);background:transparent}
+
+    .btn{display:inline-block;padding:10px 16px;border-radius:10px;font-weight:700;text-decoration:none;transition:.22s;border:none;cursor:pointer}
+    .btn-primary{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:#fff; box-shadow: 0 12px 30px rgba(77,166,255,0.12)}
+    .btn-ghost{background:transparent;border:1px solid rgba(0,0,0,0.06);color:var(--text)}
+
+    main{padding:28px 0 80px}
+    section{padding:36px 0}
+
+    .hero{display:flex;gap:18px;align-items:center;justify-content:space-between;padding:22px;background:linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));border-radius:14px;box-shadow: 0 20px 50px rgba(2,6,23,0.06);backdrop-filter: blur(4px)}
+    .hero-left{flex:1;min-width:220px}
+    .hero-title{font-size:28px;margin:0 0 8px 0;line-height:1.02}
+    .hero-sub{color:var(--muted);margin:0 0 12px 0}
+
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+    .card{background:rgba(255,255,255,0.6);padding:14px;border-radius:12px;transition:transform .35s cubic-bezier(.2,.9,.3,1), box-shadow .35s; overflow:visible; position:relative; border:1px solid rgba(255,255,255,0.06)}
+    .card:hover{transform: translateY(-8px) scale(1.01); box-shadow: 0 26px 60px rgba(2,6,23,0.12)}
+    .card img{width:100%;height:160px;object-fit:cover;border-radius:8px; display:block; margin-bottom:12px; transition: transform .45s ease, filter .45s ease;}
+    .card img:hover{transform: scale(1.03); filter: brightness(1.04); cursor:pointer}
+
+    .card h3{margin:0 0 6px 0;font-size:18px}
+    .card p{margin:0;color:var(--muted);font-size:14px}
+
+    form{display:flex;flex-direction:column;gap:12px}
+    input,textarea{padding:10px;border-radius:8px;border:1px solid #ccc; background: rgba(255,255,255,0.95); box-shadow: 0 8px 20px rgba(2,6,23,0.06);}
+    textarea{min-height:110px; resize:vertical}
+    footer{text-align:center;padding:20px;background:transparent;color:var(--muted);margin-top:22px}
+
+    h1,h2,h3 { color: var(--text); margin:0 0 10px 0; text-shadow: 0 6px 18px rgba(0,0,0,0.04); }
+
+    .reveal { opacity: 0; transform: translateY(6px); animation-fill-mode: forwards; animation-duration: 1100ms; animation-timing-function: cubic-bezier(.2,.8,.2,1); animation-delay: var(--delay, 0ms); }
+    @keyframes slideInLeft { from { opacity:0; transform: translateX(-48px); } to { opacity:1; transform: translateX(0); } }
+    @keyframes slideInRight{ from { opacity:0; transform: translateX(48px); } to { opacity:1; transform: translateX(0); } }
+    @keyframes slideInUp   { from { opacity:0; transform: translateY(48px); } to { opacity:1; transform: translateY(0); } }
+    @keyframes slideInDown { from { opacity:0; transform: translateY(-48px); } to { opacity:1; transform: translateY(0); } }
+    .reveal-left { animation-name: slideInLeft; }
+    .reveal-right{ animation-name: slideInRight; }
+    .reveal-up   { animation-name: slideInUp; }
+    .reveal-down { animation-name: slideInDown; }
+
+    /* Modal styles */
+    .modal { position: fixed; inset: 0; display: none; align-items:center; justify-content:center; z-index:120; background: rgba(2,6,23,0.5); padding:20px; }
+    .modal.open { display:flex; }
+    .modal-card{ max-width:980px; width:100%; background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(255,255,255,0.96)); border-radius:12px; box-shadow: 0 30px 90px rgba(2,6,23,0.3); overflow:hidden; display:grid; grid-template-columns: 1fr 420px; gap:0; }
+    .modal-media{min-height:300px; max-height:70vh; overflow:hidden;}
+    .modal-media img{width:100%;height:100%;object-fit:cover;display:block}
+    .modal-body{padding:22px;overflow:auto;}
+    .modal-body h3{margin-top:0}
+    .modal-close{position:absolute; right:20px; top:18px; background:transparent; border:none; font-size:22px; cursor:pointer; color: #fff;}
+    @media (max-width:980px){ .modal-card{grid-template-columns:1fr; max-height:92vh;} .modal-media{height:260px} }
+
+  </style>
+</head>
+<body>
+  <header class="container">
+    <div style="display:flex;align-items:center;gap:12px">
+      <div class="brand" data-i18n="brand">Максим</div>
+      <select id="lang" class="lang-select" aria-label="Select language">
+        <option value="ru">Русский</option>
+        <option value="en">English</option>
+        <option value="uz">O'zbek</option>
+      </select>
+    </div>
+
+    <nav>
+      <a href="#about" data-i18n="nav.about">Обо мне</a>
+      <a href="#projects" data-i18n="nav.projects">Проекты</a>
+      <a href="#telegram" data-i18n="nav.telegram">Telegram</a>
+      <a href="#contact" data-i18n="nav.contact">Связаться</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero reveal reveal-up" style="--delay:120ms">
+      <div class="hero-left">
+        <h1 class="hero-title" data-i18n="hero.title">Автор сайтов — готовые решения</h1>
+        <p class="hero-sub" data-i18n="hero.sub">Делаю лёгкие, быстрые и красивые сайты: лендинги, интернет‑магазины и веб‑приложения. Адаптивно и с поддержкой.</p>
+        <div style="display:flex;gap:12px">
+          <a class="btn btn-primary" href="#contact" data-i18n="btn.order">Заказать сайт</a>
+          <a class="btn btn-ghost" href="#projects" data-i18n="btn.view">Посмотреть работы</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="reveal reveal-left" style="--delay:240ms">
+      <h2 data-i18n="about.title">Обо мне</h2>
+      <p data-i18n="about.text" style="color:var(--muted);max-width:760px">Я создаю сайты под ключ: лендинги, магазины, корпоративные сайты и SPA. Работаю над дизайном, версткой и адаптацией под любые устройства, а также сопровождаю проекты после запуска.</p>
+    </section>
+
+    <section id="projects" class="reveal reveal-up" style="--delay:360ms">
+      <h2 data-i18n="projects.title">Примеры работ</h2>
+      <div class="grid" style="margin-top:18px">
+
+        <div class="card" data-key="landing" data-i18n-card>
+          <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1000&q=80" alt="Landing" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=80'">
+          <h3><a class="project-link" href="#" data-action="open" data-keylink="landing">Landing</a></h3>
+          <p class="muted">Одностраничный сайт для презентации продукта или услуги. Подходит для рекламы и привлечения клиентов.</p>
+        </div>
+
+        <div class="card" data-key="shop" data-i18n-card>
+          <img src="https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1000&q=80" alt="Shop" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80'">
+          <h3><a class="project-link" href="#" data-action="open" data-keylink="shop">Интернет-магазин</a></h3>
+          <p class="muted">Сайт с каталогом товаров, корзиной. Помогаю сделать удобный и продающий магазин.</p>
+        </div>
+
+        <div class="card" data-key="corporate" data-i18n-card>
+          <img src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=1000&q=80" alt="Corporate" loading="lazy" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1515879218367-8466d910aaa4?auto=format&fit=crop&w=1200&q=80'">
+          <h3><a class="project-link" href="#" data-action="open" data-keylink="corporate">Корпоративный сайт</a></h3>
+          <p class="muted">Сайт компании с разделами «О нас», «Услуги», «Контакты». Отличный вариант для бизнеса и имиджа.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="telegram" class="reveal reveal-right" style="--delay:480ms">
+      <h2 data-i18n="telegram.title">Мой Telegram</h2>
+      <p style="margin-top:8px"><a class="btn btn-primary" href="https://t.me/fallenAngel_8" target="_blank" rel="noopener noreferrer">Написать @fallenAngel_8</a></p>
+    </section>
+
+    <section id="contact" class="reveal reveal-up" style="--delay:600ms">
+      <h2 data-i18n="contact.title">Связаться со мной</h2>
+      <form action="https://formspree.io/f/myznkorv" method="POST" style="max-width:720px;margin-top:12px;">
+        <input id="input-name" type="text" name="name" placeholder="Ваше имя" required>
+        <input id="input-email" type="email" name="email" placeholder="Ваш email" required>
+        <textarea id="input-message" name="message" placeholder="Ваше сообщение" required></textarea>
+        <button id="sendBtn" type="submit" class="btn btn-primary">Отправить</button>
+      </form>
+      <p style="margin-top:10px;color:#333;font-size:14px">Письма будут приходить на: <strong>maksimbabamuratov2@gmail.com</strong></p>
+    </section>
+  </main>
+
+  <footer class="container">
+    <div data-i18n="footer.copy">© <span id="year"></span> Максим</div>
+  </footer>
+
+  <!-- Modal -->
+  <div id="projectModal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-card" role="document">
+      <div class="modal-media"><img id="modalImage" src="" alt=""></div>
+      <div class="modal-body">
+        <button class="modal-close" id="modalClose" aria-label="Закрыть">✕</button>
+        <h3 id="modalTitle"></h3>
+        <p id="modalDesc" style="color:var(--muted)"></p>
+        <div style="margin-top:12px;"><a id="modalAction" class="btn btn-primary" href="#contact">Заказать похожее</a></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // i18n translations
+    const i18n = {
+      ru: {
+        brand: 'Максим',
+        'nav.about':'Обо мне', 'nav.projects':'Проекты', 'nav.telegram':'Telegram', 'nav.contact':'Связаться',
+        'hero.title':'Автор сайтов — готовые решения',
+        'hero.sub':'Делаю лёгкие, быстрые и красивые сайты: лендинги, интернет‑магазины и веб‑приложения. Адаптивно и с поддержкой.',
+        'btn.order':'Заказать сайт','btn.view':'Посмотреть работы',
+        'about.title':'Обо мне','about.text':'Я создаю сайты под ключ: лендинги, магазины, корпоративные сайты и SPA. Работаю над дизайном, версткой и адаптацией под любые устройства, а также сопровождаю проекты после запуска.',
+        'projects.title':'Примеры работ',
+        'telegram.title':'Мой Telegram','contact.title':'Связаться со мной',
+        'footer.copy':'© <span id="year"></span> Максим',
+        projects:{
+          landing:{title:'Лендинг', desc:'Адаптивный лендинг с ярким дизайном, плавными эффектами и оптимизацией под мобильные устройства.'},
+          shop:{title:'Интернет-магазин', desc:'Интернет-магазин с каталогом, корзиной и интеграцией платёжных систем. Удобный UX для покупок.'},
+          corporate:{title:'Корпоративный сайт', desc:'Корпоративный сайт с разделами "О нас", услугами, командой и контактной формой.'}
+        },
+        form:{name:'Ваше имя', email:'Ваш email', message:'Ваше сообщение', submit:'Отправить'},
+        modalOrder:'Заказать похожее'
+      },
+      en: {
+        brand: 'Maksim',
+        'nav.about':'About','nav.projects':'Projects','nav.telegram':'Telegram','nav.contact':'Contact',
+        'hero.title':'Website creator — turnkey solutions',
+        'hero.sub':'I build lightweight, fast and beautiful websites: landings, online stores and web applications. Responsive and supported.',
+        'btn.order':'Order a site','btn.view':'View work',
+        'about.title':'About me','about.text':'I create turnkey websites: landings, stores, corporate sites and SPAs. I work on design, markup and adaptation for all devices and provide post-launch support.',
+        'projects.title':'Examples of work',
+        'telegram.title':'My Telegram','contact.title':'Contact me',
+        'footer.copy':'© <span id="year"></span> Maksim',
+        projects:{
+          landing:{title:'Landing', desc:'Responsive landing page with bright design, smooth transitions and mobile optimization.'},
+          shop:{title:'Online store', desc:'Online store with catalog, cart and payment integrations. Comfortable UX for purchases.'},
+          corporate:{title:'Corporate website', desc:'Corporate website with About, Services, Team sections and contact form.'}
+        },
+        form:{name:'Your name', email:'Your email', message:'Your message', submit:'Send'},
+        modalOrder:'Order similar'
+      },
+      uz: {
+        brand: 'Maksim',
+        'nav.about':'Mening haqimda','nav.projects':'Loyihalar','nav.telegram':'Telegram','nav.contact':'Bog\'lanish',
+        'hero.title':'Veb-sayt muallifi — tayyor yechimlar',
+        'hero.sub':'Men yengil, tez va chiroyli veb-saytlar yarataman: landinglar, onlayn do\'konlar va veb-ilovalar. Moslashuvchan va qo\'llab-quvvatlanadi.',
+        'btn.order':'Sayt buyurtma qilish','btn.view':'Ishlarni ko\'rish',
+        'about.title':'Mening haqimda','about.text':'Men to\'liq ishlaydigan saytlarni yarataman: landinglar, do\'konlar, korporativ saytlari va SPA. Dizayn, kod va mobil moslashuvni amalga oshiraman hamda loyiha ishga tushgandan keyin ham yordam beraman.',
+        'projects.title':'Ish namunalarim',
+        'telegram.title':'Mening Telegram','contact.title':'Bog\'lanish',
+        'footer.copy':'© <span id="year"></span> Maksim',
+        projects:{
+          landing:{title:"Landing", desc:'Moslashuvchan landing: yorqin dizayn, silliq o\'tishlar va mobil optimizatsiya.'},
+          shop:{title:"Onlayn do'kon", desc:"Onlayn do'kon: katalog, savat va to'lov tizimlari bilan integratsiya. Foydalanuvchi uchun qulay UX."},
+          corporate:{title:"Korporativ sayt", desc:"Kompaniya uchun sayti: \"Biz haqimizda\", xizmatlar va aloqa formasi bilan."}
+        },
+        form:{name:'Ismingiz', email:'Sizning email', message:"Xabaringiz", submit:'Yuborish'},
+        modalOrder:'Shunga o\'xshashini buyurtma qilish'
+      }
+    };
+
+    // helper to set language
+    function setLanguage(lang){
+      if(!i18n[lang]) lang='ru';
+      // store
+      localStorage.setItem('site_lang', lang);
+      // set lang attr
+      document.documentElement.lang = (lang === 'ru') ? 'ru' : ((lang==='en')? 'en':'uz');
+
+      // simple mapping for keys
+      const keys = [
+        'brand','nav.about','nav.projects','nav.telegram','nav.contact',
+        'hero.title','hero.sub','btn.order','btn.view','about.title','about.text','projects.title','telegram.title','contact.title','footer.copy', 'modalOrder'
+      ];
+      keys.forEach(k=>{
+        const els = document.querySelectorAll('[data-i18n="'+k+'"], [data-i18n^="'+k+'"]');
+        els.forEach(el=>{
+          const text = i18n[lang][k];
+          if(text!==undefined){ el.innerHTML = text; }
+        });
+      });
+
+      // form placeholders and submit
+      const form = i18n[lang].form;
+      if(form){
+        document.getElementById('input-name').placeholder = form.name;
+        document.getElementById('input-email').placeholder = form.email;
+        document.getElementById('input-message').placeholder = form.message;
+        document.getElementById('sendBtn').textContent = form.submit;
+      }
+
+      // projects: update card titles and descriptions
+      const projects = i18n[lang].projects || {};
+      document.querySelectorAll('[data-i18n-card]').forEach(card=>{
+        const key = card.dataset.key;
+        const p = projects[key];
+        if(p){
+          const link = card.querySelector('.project-link');
+          if(link) link.textContent = p.title;
+          const desc = card.querySelector('p');
+          if(desc) desc.textContent = p.desc;
+        }
+      });
+
+      // modal button
+      const modalOrder = i18n[lang].modalOrder || '';
+      const modalAction = document.getElementById('modalAction');
+      if(modalAction) modalAction.textContent = modalOrder;
+
+      // update footer copy that may contain span#year
+      const footer = document.querySelector('[data-i18n="footer.copy"]');
+      if(footer) footer.innerHTML = i18n[lang]['footer.copy'];
+    }
+
+    // init
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const saved = localStorage.getItem('site_lang') || 'ru';
+      const selector = document.getElementById('lang');
+      selector.value = saved;
+      setLanguage(saved);
+
+      // hook selector change
+      selector.addEventListener('change', (e)=> setLanguage(e.target.value));
+
+      // reveal animation observer
+      const reveals = Array.from(document.querySelectorAll('.reveal'));
+      const directions = ['reveal-left','reveal-right','reveal-up','reveal-down'];
+      reveals.forEach((el,i)=>{ if(!el.classList.contains('reveal-left')&&!el.classList.contains('reveal-right')&&!el.classList.contains('reveal-up')&&!el.classList.contains('reveal-down')) el.classList.add(directions[i%directions.length]); });
+      const io = new IntersectionObserver((entries, obs)=>{ entries.forEach(entry=>{ if(entry.isIntersecting){ entry.target.style.animationPlayState='running'; obs.unobserve(entry.target); } }); }, {threshold:0.08});
+      reveals.forEach(el=>{ el.style.animationPlayState='paused'; const rect = el.getBoundingClientRect(); if(rect.top < (window.innerHeight||document.documentElement.clientHeight) - 30) el.style.animationPlayState='running'; else io.observe(el); });
+
+      // modal logic
+      const cards = Array.from(document.querySelectorAll('.card'));
+      const modal = document.getElementById('projectModal');
+      const modalImage = document.getElementById('modalImage');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalDesc = document.getElementById('modalDesc');
+      const modalClose = document.getElementById('modalClose');
+      const modalAction = document.getElementById('modalAction');
+
+      cards.forEach(card=>{
+        const key = card.dataset.key;
+        const img = card.querySelector('img');
+        const link = card.querySelector('.project-link');
+        function open(){
+          const proj = i18n[ localStorage.getItem('site_lang') || 'ru' ].projects[key];
+          modalImage.src = card.dataset.img || img.src;
+          modalTitle.textContent = (proj && proj.title) ? proj.title : (card.querySelector('h3')?.innerText || 'Project');
+          modalDesc.textContent = (proj && proj.desc) ? proj.desc : (card.querySelector('p')?.innerText || '');
+          modalAction.textContent = i18n[ localStorage.getItem('site_lang') || 'ru' ].modalOrder || 'Order';
+          modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden';
+        }
+        img.addEventListener('click', (e)=>{ e.preventDefault(); open(); });
+        if(link) link.addEventListener('click', (e)=>{ e.preventDefault(); open(); });
+      });
+
+      modalClose.addEventListener('click', ()=>{ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; setTimeout(()=> modalImage.src=''); });
+      modal.addEventListener('click', (e)=>{ if(e.target===modal) { modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; setTimeout(()=> modalImage.src=''); } });
+      document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') { modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; setTimeout(()=> modalImage.src=''); } });
+
+      // nav active on scroll
+      const navLinks = Array.from(document.querySelectorAll('header nav a'));
+      const sections = navLinks.map(a=> document.querySelector(a.getAttribute('href')) );
+      function updateNav(){ const offset = window.innerHeight * 0.4; let idx = sections.findIndex(sec=> sec && sec.getBoundingClientRect().top > offset); if(idx===-1) idx = sections.length -1; const activeIndex = Math.max(0, idx-1); navLinks.forEach((a,i)=> a.classList.toggle('active', i===activeIndex)); }
+      updateNav(); window.addEventListener('scroll', updateNav, {passive:true}); window.addEventListener('resize', updateNav);
+    });
+  </script>
+</body>
+</html>
